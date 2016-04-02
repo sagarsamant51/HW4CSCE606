@@ -25,7 +25,7 @@ describe MoviesController do
     
      it 'should redirect to the homepage view' do
         movie=FactoryGirl.create(:movie)
-        post :find_similar_director,:id => movie.id
+        get :find_similar_director,:id => movie.id
         response.should redirect_to root_path
         expect(flash[:warning]).to eq "'#{movie.title}' has no director info"
     end
