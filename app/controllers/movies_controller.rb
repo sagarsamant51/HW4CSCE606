@@ -13,7 +13,7 @@ class MoviesController < ApplicationController
       flash[:warning] = "'#{@movie.title}' has no director info"
       redirect_to root_path
     end
-    @movies_list=Movie.find_all_by_director(@movie.director)
+    @movies_list=Movie.find_all_by_director
   end
   def index
     sort = params[:sort] || session[:sort]

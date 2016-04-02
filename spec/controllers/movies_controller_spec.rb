@@ -1,15 +1,29 @@
 require 'spec_helper'
-
 describe MoviesController do
+    it 'should render the #index template' do
+        get :index
+        response.should render_template :index
+    end
+    it 'should assign the requested contact to @movie' do
+        movie=FactoryGirl.create(:movie)
+        get :show, :id =>movie
+        assigns(:movie).should eql movie
+    end
     
-    describe 'searching for movies by director' do
-        before :each do
-            @fake_results= mock(Movie, :title => "Shaktimaan", :director => "director", :id => '1')
-        end
-        it 'tests movies by same director' do
-            Movie.stub!(:find).with('1').and_return(@fake_results)
-            get :find_similar_director, {:id =>'1'}
-        end
-        
+    it 'should render the show view' do
+        movie=FactoryGirl.create(:movie)
+        get :show, :id =>movie
+        response.should render_template :show
+    end
+    
+    it 'should render the find_similar_director view' do
+        movie=FactoryGirl.create(:movie)
+        get :find_similar_director,:id => movie.id
+        response.should render_template :find_similar_director
+    end
+    
+    it 'should Post the new movie' do
+        post :create,:movie => FactoryGirl.attributes_for(:movie)
+        response.should redirect_to movies_path
     end
 end
