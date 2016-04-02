@@ -9,11 +9,11 @@ class MoviesController < ApplicationController
   def find_similar_director
     id = params[:id] # retrieve movie ID from URI route
     @movie = Movie.find(id) # look up movie by unique ID
+    @movies_list=Movie.find_similar_movies(@movie)
     if @movie.director == nil || @movie.director.empty?
       flash[:warning] = "'#{@movie.title}' has no director info"
       redirect_to root_path
     end
-    @movies_list=Movie.find_all_by_director(@movie.director)
   end
   def index
     sort = params[:sort] || session[:sort]

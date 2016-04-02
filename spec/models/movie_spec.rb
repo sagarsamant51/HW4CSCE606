@@ -20,8 +20,8 @@ describe Movie do
         end
         context 'it has a director' do
             it 'returns a list of director' do
-                @ridley.find_all_by_director.should eql [@ridley,@ridley1]
-                @ridley.find_all_by_director.should_not include @ridley2
+                Movie.find_similar_movies(@ridley).should eql [@ridley,@ridley1]
+                Movie.find_similar_movies(@ridley).should_not include @ridley2
             end
         end
     end
